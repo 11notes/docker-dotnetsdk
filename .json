@@ -1,0 +1,17 @@
+{
+  "image": "11notes/dotnetsdk",
+  "name": "dotnetsdk",
+  "root": "/",
+  "semver": {
+    "version": "8"
+  },
+  "readme": {
+    "description": "Build .NET core apps with the default tooling present",
+    "parent": {
+      "image": "11notes/alpine:stable"
+    },
+    "built": {
+      "dotnet": "https://dotnet.microsoft.com/en-us/"
+    }
+  }
+}
