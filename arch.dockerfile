@@ -46,7 +46,7 @@
         git \
         dotnet${APP_VERSION}-hostfxr \
         dotnet${APP_VERSION}-sdk \
-        dotnet${APP_VERSION}-dbg;
+        dotnet${APP_VERSION}-sdk-dbg;
 
     RUN set -ex; \
       if [ "${APP_VERSION}" == "9" ]; then \
