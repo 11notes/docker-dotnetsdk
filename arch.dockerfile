@@ -63,6 +63,9 @@
         APP_VERSION=${APP_VERSION} \
         APP_ROOT=${APP_ROOT}
 
+  # :: app specific environment
+    ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
+
   # :: multi-stage
     COPY --from=util / /
     COPY --from=build /usr/local/bin /usr/local/bin
