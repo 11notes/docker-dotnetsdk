@@ -1,13 +1,42 @@
 # ╔═════════════════════════════════════════════════════╗
 # ║                       SETUP                         ║
 # ╚═════════════════════════════════════════════════════╝
-  # GLOBAL
+# GLOBAL
   ARG APP_UID=1000 \
-      APP_GID=1000 \
-      APP_VERSION=8
+      APP_GID=1000
 
-  # :: FOREIGN IMAGES
+# :: FOREIGN IMAGES
   FROM 11notes/util:bin AS util
+
+
+# ╔═════════════════════════════════════════════════════╗
+# ║                       BUILD                         ║
+# ╚═════════════════════════════════════════════════════╝
+# :: APK
+  FROM alpine AS build
+  COPY ./build /
+  ARG TARGETARCH \
+      TARGETVARIANT \
+      APP_VERSION
+
+  RUN set -ex; \
+    apk --update --no-cache add \
+      pv \
+      wget \
+      tar \
+      xz \
+      jq;
+
+  RUN set -ex; \
+    SHA512=$(cat /sha512.json | jq -r '.sha512 | .[] | select(.version == "'${APP_VERSION}'") | .'${TARGETARCH}${TARGETVARIANT}''); \
+    case "${TARGETARCH}${TARGETVARIANT}" in \
+      "amd64") export TARGETARCH="x64";; \
+      "armv7") export TARGETVARIANT="";; \
+    esac; \
+    wget -q --show-progress --progress=bar:force https://builds.dotnet.microsoft.com/dotnet/Sdk/${APP_VERSION}/dotnet-sdk-${APP_VERSION}-linux-musl-${TARGETARCH}${TARGETVARIANT}.tar.gz; \
+    echo "${SHA512} dotnet-sdk-${APP_VERSION}-linux-musl-${TARGETARCH}${TARGETVARIANT}.tar.gz" | sha512sum -c; \
+    pv dotnet-sdk-${APP_VERSION}-linux-musl-${TARGETARCH}${TARGETVARIANT}.tar.gz | tar xz -C /usr/local/bin;
+
 
 # ╔═════════════════════════════════════════════════════╗
 # ║                       IMAGE                         ║
@@ -36,20 +65,20 @@
 
   # :: multi-stage
     COPY --from=util / /
+    COPY --from=build /usr/local/bin /usr/local/bin
 
 # :: RUN
   USER root
 
-  # :: install sdk
-    RUN set -ex; \
-      apk --update --no-cache add \
-        git \
-        dotnet${APP_VERSION}-hostfxr \
-        dotnet${APP_VERSION}-sdk \
-        dotnet${APP_VERSION}-sdk-dbg;
+  RUN set -ex; \
+    apk --update --no-cache add \
+      git \
+      icu-data-full \
+      icu-libs \
+      lttng-ust \
+      xz-libs \
+      libunwind;
 
-    RUN set -ex; \
-      if [ "${APP_VERSION}" == "9" ]; then \
-        apk --update --no-cache add \
-          dotnet${APP_VERSION}-sdk-aot; \
-      fi;
+# :: EXECUTE
+  ENTRYPOINT ["/usr/local/bin/dotnet"]
+  CMD ["sdk", "check"]
