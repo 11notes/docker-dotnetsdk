@@ -13,5 +13,8 @@
     "built": {
       "dotnet": "https://dotnet.microsoft.com/en-us/"
     }
+  },
+  "grype":{
+    "severity":"critical"
   }
 }
