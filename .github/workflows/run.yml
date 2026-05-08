@@ -39,7 +39,6 @@ jobs:
             if ! curl -kILs --fail https://hub.docker.com/v2/repositories/11notes/dotnetsdk/tags/${LATEST_VERSION}; then
               echo "LATEST_VERSION_100=${LATEST_VERSION}" >> "${GITHUB_ENV}"
             fi
-            break
           fi
 
       - name: call version 10.0
@@ -59,7 +58,6 @@ jobs:
             if ! curl -kILs --fail https://hub.docker.com/v2/repositories/11notes/dotnetsdk/tags/${LATEST_VERSION}; then
               echo "LATEST_VERSION_90=${LATEST_VERSION}" >> "${GITHUB_ENV}"
             fi
-            break
           fi
 
       - name: call version 9.0
@@ -79,7 +77,6 @@ jobs:
             if ! curl -kILs --fail https://hub.docker.com/v2/repositories/11notes/dotnetsdk/tags/${LATEST_VERSION}; then
               echo "LATEST_VERSION_80=${LATEST_VERSION}" >> "${GITHUB_ENV}"
             fi
-            break
           fi
 
       - name: call version 8.0
