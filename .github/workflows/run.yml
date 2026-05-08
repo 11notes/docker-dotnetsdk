@@ -34,14 +34,13 @@ jobs:
       # 10.0
       - name: get latest 10.0 version
         run: |
-          export LATEST_VERSION=$(curl -s https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/releases-index.json | jq -r '."releases-index"[] | select(."channel-version" == "10.0") | ."latest-sdk"')
+          LATEST_VERSION=$(curl -s https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/releases-index.json | jq -r '."releases-index"[] | select(."channel-version" == "10.0") | ."latest-sdk"')
           if [ "${LATEST_VERSION}" != "null" ]; then
-              if ! curl -kILs --fail https://hub.docker.com/v2/repositories/11notes/dotnetsdk/tags/${LATEST_VERSION}; then
-                echo "LATEST_VERSION_100=${LATEST_VERSION}" >> "${GITHUB_ENV}"
-              fi
-              break
+            if ! curl -kILs --fail https://hub.docker.com/v2/repositories/11notes/dotnetsdk/tags/${LATEST_VERSION}; then
+              echo "LATEST_VERSION_100=${LATEST_VERSION}" >> "${GITHUB_ENV}"
             fi
-          done
+            break
+          fi
 
       - name: call version 10.0
         uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7
@@ -55,14 +54,13 @@ jobs:
       # 9.0
       - name: get latest 9.0 version
         run: |
-          export LATEST_VERSION=$(curl -s https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/releases-index.json | jq -r '."releases-index"[] | select(."channel-version" == "9.0") | ."latest-sdk"')
+          LATEST_VERSION=$(curl -s https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/releases-index.json | jq -r '."releases-index"[] | select(."channel-version" == "9.0") | ."latest-sdk"')
           if [ "${LATEST_VERSION}" != "null" ]; then
-              if ! curl -kILs --fail https://hub.docker.com/v2/repositories/11notes/dotnetsdk/tags/${LATEST_VERSION}; then
-                echo "LATEST_VERSION_90=${LATEST_VERSION}" >> "${GITHUB_ENV}"
-              fi
-              break
+            if ! curl -kILs --fail https://hub.docker.com/v2/repositories/11notes/dotnetsdk/tags/${LATEST_VERSION}; then
+              echo "LATEST_VERSION_90=${LATEST_VERSION}" >> "${GITHUB_ENV}"
             fi
-          done
+            break
+          fi
 
       - name: call version 9.0
         uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7
@@ -76,14 +74,13 @@ jobs:
       # 8.0
       - name: get latest 8.0 version
         run: |
-          export LATEST_VERSION=$(curl -s https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/releases-index.json | jq -r '."releases-index"[] | select(."channel-version" == "8.0") | ."latest-sdk"')
+          LATEST_VERSION=$(curl -s https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/releases-index.json | jq -r '."releases-index"[] | select(."channel-version" == "8.0") | ."latest-sdk"')
           if [ "${LATEST_VERSION}" != "null" ]; then
-              if ! curl -kILs --fail https://hub.docker.com/v2/repositories/11notes/dotnetsdk/tags/${LATEST_VERSION}; then
-                echo "LATEST_VERSION_80=${LATEST_VERSION}" >> "${GITHUB_ENV}"
-              fi
-              break
+            if ! curl -kILs --fail https://hub.docker.com/v2/repositories/11notes/dotnetsdk/tags/${LATEST_VERSION}; then
+              echo "LATEST_VERSION_80=${LATEST_VERSION}" >> "${GITHUB_ENV}"
             fi
-          done
+            break
+          fi
 
       - name: call version 8.0
         uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7
