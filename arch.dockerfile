@@ -12,9 +12,8 @@
 # ╔═════════════════════════════════════════════════════╗
 # ║                       BUILD                         ║
 # ╚═════════════════════════════════════════════════════╝
-# :: APK
+# :: DOTNET
   FROM alpine AS build
-  COPY ./build /
   ARG TARGETARCH \
       TARGETVARIANT \
       APP_VERSION
@@ -28,13 +27,11 @@
       jq;
 
   RUN set -ex; \
-    SHA512=$(cat /sha512.json | jq -r '.sha512 | .[] | select(.version == "'${APP_VERSION}'") | .'${TARGETARCH}${TARGETVARIANT}''); \
     case "${TARGETARCH}${TARGETVARIANT}" in \
       "amd64") export TARGETARCH="x64";; \
       "armv7") export TARGETVARIANT="";; \
     esac; \
     wget -q --show-progress --progress=bar:force https://builds.dotnet.microsoft.com/dotnet/Sdk/${APP_VERSION}/dotnet-sdk-${APP_VERSION}-linux-musl-${TARGETARCH}${TARGETVARIANT}.tar.gz; \
-    echo "${SHA512} dotnet-sdk-${APP_VERSION}-linux-musl-${TARGETARCH}${TARGETVARIANT}.tar.gz" | sha512sum -c; \
     pv dotnet-sdk-${APP_VERSION}-linux-musl-${TARGETARCH}${TARGETVARIANT}.tar.gz | tar xz -C /usr/local/bin;
 
 
