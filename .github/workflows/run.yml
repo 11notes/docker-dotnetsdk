@@ -50,6 +50,16 @@ jobs:
           token: "${{ secrets.REPOSITORY_TOKEN }}"
           inputs: '{ "version":"${{ env.LATEST_VERSION_100 }}" }'
 
+      - name: update semver version 10.0
+        uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7
+        if: env.LATEST_VERSION_100 != ''
+        with:
+          wait-for-completion: false
+          workflow: json.latest.yml
+          repo: 11notes/CICD
+          token: "${{ secrets.REPOSITORY_TOKEN }}"
+          inputs: '{ "app":"dotnet10", "version":"${{ env.LATEST_VERSION_100 }}" }'
+
       # 9.0
       - name: get latest 9.0 version
         run: |
@@ -69,6 +79,16 @@ jobs:
           token: "${{ secrets.REPOSITORY_TOKEN }}"
           inputs: '{ "version":"${{ env.LATEST_VERSION_90 }}" }'
 
+      - name: update semver version 9.0
+        uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7
+        if: env.LATEST_VERSION_90 != ''
+        with:
+          wait-for-completion: false
+          workflow: json.latest.yml
+          repo: 11notes/CICD
+          token: "${{ secrets.REPOSITORY_TOKEN }}"
+          inputs: '{ "app":"dotnet9", "version":"${{ env.LATEST_VERSION_90 }}" }'
+
       # 8.0
       - name: get latest 8.0 version
         run: |
@@ -87,3 +107,13 @@ jobs:
           workflow: org.version
           token: "${{ secrets.REPOSITORY_TOKEN }}"
           inputs: '{ "version":"${{ env.LATEST_VERSION_80 }}" }'
+
+      - name: update semver version 8.0
+        uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7
+        if: env.LATEST_VERSION_80 != ''
+        with:
+          wait-for-completion: false
+          workflow: json.latest.yml
+          repo: 11notes/CICD
+          token: "${{ secrets.REPOSITORY_TOKEN }}"
+          inputs: '{ "app":"dotnet8", "version":"${{ env.LATEST_VERSION_80 }}" }'
