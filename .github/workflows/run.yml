@@ -41,9 +41,15 @@ jobs:
             fi
           fi
 
+      - name: check if updated is needed 10.0
+        if: env.LATEST_VERSION_100 != 'null' && env.LATEST_VERSION_100 != ''
+        uses: 11notes/action-org-update@v1 # v1.0.0
+        with:
+          latest: ${{ env.LATEST_VERSION_100 }}
+
       - name: call version 10.0
+        if: env.ORG_UPDATE == 'true'
         uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7
-        if: env.LATEST_VERSION_100 != ''
         with:
           wait-for-completion: false
           workflow: org.version
@@ -51,8 +57,8 @@ jobs:
           inputs: '{ "version":"${{ env.LATEST_VERSION_100 }}" }'
 
       - name: update semver version 10.0
+        if: env.ORG_UPDATE == 'true'
         uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7
-        if: env.LATEST_VERSION_100 != ''
         with:
           wait-for-completion: false
           workflow: json.latest.yml
@@ -70,9 +76,15 @@ jobs:
             fi
           fi
 
+      - name: check if updated is needed 9.0
+        if: env.LATEST_VERSION_90 != 'null' && env.LATEST_VERSION_90 != ''
+        uses: 11notes/action-org-update@v1 # v1.0.0
+        with:
+          latest: ${{ env.LATEST_VERSION_90 }}
+
       - name: call version 9.0
+        if: env.ORG_UPDATE == 'true'
         uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7
-        if: env.LATEST_VERSION_90 != ''
         with:
           wait-for-completion: false
           workflow: org.version
@@ -80,8 +92,8 @@ jobs:
           inputs: '{ "version":"${{ env.LATEST_VERSION_90 }}" }'
 
       - name: update semver version 9.0
+        if: env.ORG_UPDATE == 'true'
         uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7
-        if: env.LATEST_VERSION_90 != ''
         with:
           wait-for-completion: false
           workflow: json.latest.yml
@@ -99,9 +111,15 @@ jobs:
             fi
           fi
 
+      - name: check if updated is needed 8.0
+        if: env.LATEST_VERSION_80 != 'null' && env.LATEST_VERSION_80 != ''
+        uses: 11notes/action-org-update@v1 # v1.0.0
+        with:
+          latest: ${{ env.LATEST_VERSION_80 }}
+
       - name: call version 8.0
+        if: env.ORG_UPDATE == 'true'
         uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7
-        if: env.LATEST_VERSION_80 != ''
         with:
           wait-for-completion: false
           workflow: org.version
@@ -109,8 +127,8 @@ jobs:
           inputs: '{ "version":"${{ env.LATEST_VERSION_80 }}" }'
 
       - name: update semver version 8.0
+        if: env.ORG_UPDATE == 'true'
         uses: the-actions-org/workflow-dispatch@3133c5d135c7dbe4be4f9793872b6ef331b53bc7
-        if: env.LATEST_VERSION_80 != ''
         with:
           wait-for-completion: false
           workflow: json.latest.yml
